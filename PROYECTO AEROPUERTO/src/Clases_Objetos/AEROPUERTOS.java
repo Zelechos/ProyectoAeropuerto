@@ -23,7 +23,7 @@ public class AEROPUERTOS {
     }
 
     public void Insertar_Compañia(COMPAÑIAS Compañia) {
-
+        System.out.println("Introdzuca una compañia : ");
     }
 
     public String getNombre_de_Aeropuerto() {
