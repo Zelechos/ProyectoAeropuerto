@@ -9,8 +9,8 @@ public class AEROPUERTOS_PUBLICOS extends AEROPUERTOS {
         super(Nombre_de_Aeropuerto, Ciudad, Pais);
     }
 
-    public AEROPUERTOS_PUBLICOS(double Subvencion, String Nombre_de_Aeropuerto, String Ciudad, String Pais, COMPAÑIAS[] Compañias) {
-        super(Nombre_de_Aeropuerto, Ciudad, Pais, Compañias);
+    public AEROPUERTOS_PUBLICOS(double Subvencion, String Nombre_de_Aeropuerto, String Ciudad, String Pais, COMPAÑIAS[] comp) {
+        super(Nombre_de_Aeropuerto, Ciudad, Pais, comp);
         this.Subvencion = Subvencion;
     }
 

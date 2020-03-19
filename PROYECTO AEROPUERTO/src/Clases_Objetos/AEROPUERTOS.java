@@ -6,24 +6,27 @@ public class AEROPUERTOS {
     private String Ciudad;
     private String Pais;
     private int Numero_de_Compañia;
-    private COMPAÑIAS Compañias[];
+    private COMPAÑIAS Compañias[] = new COMPAÑIAS[15];
 
     //Sobre carga de metodos contructores
     public AEROPUERTOS(String Nombre_de_Aeropuerto, String Ciudad, String Pais) {
         this.Nombre_de_Aeropuerto = Nombre_de_Aeropuerto;
         this.Ciudad = Ciudad;
         this.Pais = Pais;
+        this.Numero_de_Compañia = 0;
     }
 
-    public AEROPUERTOS(String Nombre_de_Aeropuerto, String Ciudad, String Pais, COMPAÑIAS[] Compañias) {
+    public AEROPUERTOS(String Nombre_de_Aeropuerto, String Ciudad, String Pais, COMPAÑIAS comp[]) {
         this.Nombre_de_Aeropuerto = Nombre_de_Aeropuerto;
         this.Ciudad = Ciudad;
         this.Pais = Pais;
-        this.Compañias = Compañias;
+        Compañias = comp;
+        this.Numero_de_Compañia = comp.length;
     }
 
     public void Insertar_Compañia(COMPAÑIAS Compañia) {
-        System.out.println("Introdzuca una compañia : ");
+        Compañias[Numero_de_Compañia] = Compañia;
+        Numero_de_Compañia++;
     }
 
     public String getNombre_de_Aeropuerto() {
@@ -47,12 +50,24 @@ public class AEROPUERTOS {
     }
 
     //Sobre carga de Metodos
-    public COMPAÑIAS[] getCompañias(int CompañiaActual) {
-        return Compañias;
+    public COMPAÑIAS getCompañias(int CompañiaActual) {
+        return Compañias[CompañiaActual];
     }
 
-    public COMPAÑIAS[] getCompañias(String NombreCompañia) {
-        return Compañias;
+    public COMPAÑIAS getCompañias(String NombreCompañia) {
+        boolean Encontrado = false;
+        int CompañiaACtual = 0;
+        COMPAÑIAS Nombre_Compañia = null;
+
+        while ((!Encontrado) && (CompañiaACtual < Compañias.length)) {
+            if (NombreCompañia.equals(Compañias[CompañiaACtual].getNombre_Compañia())) {
+                Encontrado = true;
+                Nombre_Compañia = Compañias[CompañiaACtual];
+            }
+            CompañiaACtual++;
+        }
+
+        return Nombre_Compañia;
     }
 
 }
