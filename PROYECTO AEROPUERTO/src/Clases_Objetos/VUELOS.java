@@ -1,3 +1,4 @@
+
 package Clases_Objetos;
 
 public class VUELOS {
@@ -10,7 +11,7 @@ public class VUELOS {
     private int Numero_Actual_de_Pasajeros;
     private PASAJEROS Pasajeros_Actuales[];
 
-    public VUELOS(PASAJEROS[] Pasajeros_Actuales, String Identificador, String Ciudad_de_Origen, String Ciudad_de_Destino, double Precio, int Numero_Maximo_de_Pasajeros, int Numero_Actual_de_Pasajeros) {
+    public VUELOS(String Identificador, String Ciudad_de_Origen, String Ciudad_de_Destino, double Precio, int Numero_Maximo_de_Pasajeros) {
         this.Identificador = Identificador;
         this.Ciudad_de_Origen = Ciudad_de_Origen;
         this.Ciudad_de_Destino = Ciudad_de_Destino;

@@ -31,7 +31,7 @@ public class COMPAÑIAS {
     }
 
     //Sobrecarga de Metodos
-    public VUELOS getVuelos_Actuales(int VueloActual) {
+    public VUELOS getVuelos_Actuales(int VueloActual) {  
         return Vuelos_Actuales[VueloActual];
     }
 
