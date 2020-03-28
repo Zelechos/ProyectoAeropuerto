@@ -8,7 +8,7 @@ public class Main {
     static int CuentaActual = 0;
     static Cuenta Cuentas[] = new Cuenta[10];
 
-    public static void main(String[] args) {
+    public static void CrearCuenta() {
         int Opcion;
         do {
 
@@ -17,7 +17,7 @@ public class Main {
             System.out.println(":::::            2.- Verificacion de la Cuenta.                                                                  :::::");
             System.out.println(":::::            3.- Ingresar Mediante una Cuenta.                                                               :::::");
             System.out.println(":::::            4.- Mostrar Todas las Cuentas.                                                                  :::::");
-            System.out.println(":::::            5.- Salir .                                                                                     :::::");
+            System.out.println(":::::            5.- Salir del Modo Administrador .                                                              :::::");
             System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
             System.out.print("Digite una Opcion del Menu : ");
             Opcion = Entrada.nextInt();

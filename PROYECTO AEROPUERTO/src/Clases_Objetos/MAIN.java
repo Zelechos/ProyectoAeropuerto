@@ -1,5 +1,7 @@
 package Clases_Objetos;
 
+import Contraseña.Cuenta;
+import Contraseña.Main;
 import java.util.Scanner;
 
 public class MAIN {
@@ -72,7 +74,10 @@ public class MAIN {
     }
 
     public static void Menu() {
+        String Nombre, Nombre_Compañia, Ciudad_Origen, Ciudad_Destino;
         int Opcion;
+        AEROPUERTOS aeropuerto;
+        COMPAÑIAS compañia;
         do {
             System.out.println("::::::::::::::::::::::::::::::::::::::::::::::::::::::MENU::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
             System.out.println(":::::            1.- Consultar Aereopuertos Gestionados,(PUBLICOS o PRIVADOS).                                   :::::");
@@ -96,16 +101,50 @@ public class MAIN {
                     MostrarEmpresasSubvencion(aeropuertos);
                     break;
                 case 3:
-
+                    System.out.println("");
+                    System.out.print("Digite el Nombre del Aeropuerto : ");
+                    Entrada.nextLine();
+                    Nombre = Entrada.nextLine();
+                    aeropuerto = BuscadorAeropuerto(Nombre, aeropuertos);
+                    if (aeropuerto == null) {
+                        System.out.println("El AeroPuerto no existe ...");
+                    } else {
+                        ListadoCompañias(Nombre, aeropuerto);
+                    }
                     break;
                 case 4:
+                    System.out.println("");
+                    System.out.print("Digite el Nombre del Aeropuerto : ");
+                    Entrada.nextLine();
+                    Nombre = Entrada.nextLine();
 
+                    System.out.print("Digite el Nombre de la Compañia : ");
+                    Nombre_Compañia = Entrada.nextLine();
+
+                    aeropuerto = BuscadorAeropuerto(Nombre, aeropuertos);
+                    if (aeropuerto == null) {
+                        System.out.println("El AeroPuerto no existe ...");
+                    } else {
+                        compañia = aeropuerto.getCompañias(Nombre_Compañia);
+                        if (compañia == null) {
+                            System.out.println("Compañia no Existe . . .");
+                        } else {
+                            ListadoVuelos(Nombre_Compañia, compañia);
+                        }
+                    }
                     break;
                 case 5:
+                    Entrada.nextLine();
+                    System.out.print("Digite la Ciudad de Origen : ");
+                    Ciudad_Origen = Entrada.nextLine();
+                    System.out.print("Digite la Ciudad de Destino : ");
+                    Ciudad_Destino = Entrada.nextLine();
 
+                    OrigenDestino(Ciudad_Origen, Ciudad_Destino, aeropuertos);
                     break;
                 case 6:
-
+                    Main.CrearCuenta();
+                    
                     break;
                 case 7:
                     System.out.println("Cerrando Programa . . . ");
@@ -150,10 +189,96 @@ public class MAIN {
             } else {
                 System.out.println("La Subvencion de el Aeropuerto : " + aeropuertos[AeroPuertoActual].getNombre_de_Aeropuerto());
                 System.out.println("Subvencion" + ((AEROPUERTOS_PUBLICOS) aeropuertos[AeroPuertoActual]).getSubvencion());
-                
+
             }
             System.out.println("");
         }
     }
 
+    public static AEROPUERTOS BuscadorAeropuerto(String Nombre, AEROPUERTOS aeropuertos[]) {
+        boolean encontrado = false;
+        int cont = 0;
+        AEROPUERTOS aero = null;
+        while ((!encontrado) && (cont < aeropuertos.length)) {
+            if (Nombre.equals(aeropuertos[cont].getNombre_de_Aeropuerto())) {
+                encontrado = true;
+                aero = aeropuertos[cont];
+            }
+            cont++;
+        }
+        return aero;
+    }
+
+    public static void ListadoCompañias(String Nombre, AEROPUERTOS aeropuertos) {
+        System.out.println("Las Compañias de " + Nombre + " son : ");
+        for (int CompañiaACtual = 0; CompañiaACtual < aeropuertos.getNumero_de_Compañia(); CompañiaACtual++) {
+            System.out.println(aeropuertos.getCompañias(CompañiaACtual).getNombre_Compañia());
+        }
+    }
+
+    public static void ListadoVuelos(String Nombre_Compañia, COMPAÑIAS compañias) {
+        VUELOS vuelo;
+        System.out.println("Los Vuelo  de " + Nombre_Compañia + " son : ");
+        for (int CompañiaACtual = 0; CompañiaACtual < compañias.getNumero_de_Vuelo(); CompañiaACtual++) {
+            vuelo = compañias.getVuelos_Actuales(CompañiaACtual);
+            System.out.println("Identificador : " + vuelo.getIdentificador());
+            System.out.println("Ciudad Origen : " + vuelo.getCiudad_de_Origen());
+            System.out.println("Ciudad de Destino : " + vuelo.getCiudad_de_Destino());
+            System.out.println("Precio : " + vuelo.getPrecio());
+        }
+    }
+
+    public static VUELOS[] BuscarVuelosOrigenDestino(String Origen, String Destino, AEROPUERTOS aeropuertos[]) {
+        VUELOS vuelo;
+        int Contado = 0;
+        VUELOS ListaVuelos[];
+        for (int AeroPuertoACtual = 0; AeroPuertoACtual < aeropuertos.length; AeroPuertoACtual++) {
+            for (int CompañiaACtual = 0; CompañiaACtual < aeropuertos[AeroPuertoACtual].getNumero_de_Compañia(); CompañiaACtual++) {
+                for (int VueloACtual = 0; VueloACtual < aeropuertos[AeroPuertoACtual].getCompañias(CompañiaACtual).getNumero_de_Vuelo(); VueloACtual++) {
+                    vuelo = aeropuertos[AeroPuertoACtual].getCompañias(CompañiaACtual).getVuelos_Actuales(VueloACtual);
+                    if ((Origen.equals(vuelo.getCiudad_de_Origen())) && (Destino.equals(vuelo.getCiudad_de_Destino()))) {
+                        Contado++;
+                    }
+                }
+            }
+        }
+
+        ListaVuelos = new VUELOS[Contado];
+        int Iterador = 0;
+        for (int AeroPuertoACtual = 0; AeroPuertoACtual < aeropuertos.length; AeroPuertoACtual++) {
+            for (int CompañiaACtual = 0; CompañiaACtual < aeropuertos[AeroPuertoACtual].getNumero_de_Compañia(); CompañiaACtual++) {
+                for (int Vueloactual = 0; Vueloactual < aeropuertos[AeroPuertoACtual].getCompañias(CompañiaACtual).getNumero_de_Vuelo(); Vueloactual++) {
+                    vuelo = aeropuertos[AeroPuertoACtual].getCompañias(CompañiaACtual).getVuelos_Actuales(Vueloactual);
+                    if ((Origen.equals(vuelo.getCiudad_de_Origen())) && (Destino.equals(vuelo.getCiudad_de_Destino()))) {
+                        ListaVuelos[Iterador] = vuelo;
+                        Iterador++;
+                    }
+                }
+            }
+        }
+        return ListaVuelos;
+    }
+
+    public static void OrigenDestino(String Origen, String Destino, AEROPUERTOS aeropuertos[]) {
+
+        VUELOS vuelos[];
+
+        vuelos = BuscarVuelosOrigenDestino(Origen, Destino, aeropuertos);
+
+        if (vuelos.length == 0) {
+            System.out.println("No existen vuelos para esta ciudad Origen a Destino . . . ");
+        } else {
+            System.out.println("\nVuelos Encontrados : \n");
+
+            for (int VuelosACtual = 0; VuelosACtual < vuelos.length; VuelosACtual++) {
+                System.out.println("Identificador : " + vuelos[VuelosACtual].getIdentificador());
+                System.out.println("Ciudad de Origen : " + vuelos[VuelosACtual].getCiudad_de_Origen());
+                System.out.println("Ciudad de Destino : " + vuelos[VuelosACtual].getCiudad_de_Destino());
+                System.out.println("Precio : " + vuelos[VuelosACtual].getPrecio());
+                System.out.println("");
+            }
+
+        }
+
+    }
 }
